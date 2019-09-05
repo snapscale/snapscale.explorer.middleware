@@ -34,6 +34,7 @@ func init() {
 	Router.M["/api/account/"] = account
 	Router.M["/api/block/"] = block
 	Router.M["/api/transaction/"] = transaction
+	Router.M["/api/charts/"] = charts
 }
 
 func account(w http.ResponseWriter, r *http.Request) {
@@ -130,4 +131,8 @@ func transaction(w http.ResponseWriter, r *http.Request) {
 
 		_, _ = w.Write(data)
 	}
+}
+
+func charts(w http.ResponseWriter, _ *http.Request) {
+	_, _ = w.Write(mongodb.DailyInfo())
 }
