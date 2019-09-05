@@ -6,6 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"snapscale-api/apiClient/chain"
 	_type "snapscale-api/apiClient/type"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -22,7 +24,6 @@ func dailyOnce() {
 	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 	tomorrow := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
 	next := tomorrow.Unix() - now.Unix()
-	dailyTransactionsAmount(today)
 	for range time.Tick(time.Second * time.Duration(next)) {
 		dailyDo(today)
 		dailyOnce()
@@ -43,32 +44,44 @@ func dailyDo(tm time.Time) {
 func dailyTransactionsAmount(tm time.Time) {
 	tomorrow := time.Date(tm.Year(), tm.Month(), tm.Day()+1, 0, 0, 0, 0, tm.Location())
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	cur, _ := ActionTraces.p.Find(ctx, bson.D{{"$and",
+	cur, _ := Transactions.p.Find(ctx, bson.D{{"$and",
 		bson.A{
 			bson.D{{
-				"block_time",
+				"createdAt",
 				bson.D{{"$gte", tm}},
 			}},
 			bson.D{{
-				"block_time",
+				"createdAt",
 				bson.D{{"$lt", tomorrow}},
 			}},
 		},
 	}})
 
-	cur.Next(ctx)
-	var result bson.M
-	err := cur.Decode(&result)
-	a, _ := bson.MarshalExtJSON(result, false, true)
-	fmt.Println(string(a), err)
+	var sum float64
+	sum = 0
 
-	//defer cur.Close(ctx)
-	//for cur.Next(ctx) {
-	//	var result bson.M
-	//	err := cur.Decode(&result)
-	//	if err != nil { log.Fatal(err) }
-	//	fmt.Println(result["123"])
-	//}
+	type R struct {
+		Actions []struct {
+			Account string
+			Name    string
+			Data    struct {
+				Quantity string
+			}
+		}
+	}
+
+	for cur.Next(ctx) {
+		var result R
+		_ = cur.Decode(&result)
+		for _, action := range result.Actions {
+			if action.Account == "eosio.token" && action.Name == "transfer" {
+				arr := strings.Split(action.Data.Quantity, " ")
+				N, _ := strconv.ParseFloat(arr[0], 64)
+				sum += N
+			}
+		}
+	}
+	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "transactionAmount", "value": fmt.Sprintf("%.2f", sum), "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
 }
 
 func dailyTransactions(tm time.Time) {

@@ -51,7 +51,7 @@ func init() {
 	ActionTraces = &collection{}
 	ActionTraces.p = MongoDb.Collection("action_traces")
 
-	//dailyInit()
+	dailyInit()
 }
 
 func Start() {}
