@@ -1,5 +1,6 @@
 # snapscale-explorer-middleware
-middleware of snapscale explorer
+middleware of snapscale explorer  
+![](https://img.shields.io/badge/version-1.0.0-brightgreen) ![](https://img.shields.io/badge/author-Miguel-blue)
 
 ## Before Everything
 - ###Add Index (mongodb)
