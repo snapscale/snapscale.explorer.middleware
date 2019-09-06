@@ -20,8 +20,8 @@ middleware of snapscale explorer
 - DB config  
 /config/config.go
 
-- Docker config  
-./Dockerfile
+- Docker run config  
+./build
 
 ## Log (optional)
 Run script for log support
