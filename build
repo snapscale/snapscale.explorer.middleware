@@ -1,0 +1,45 @@
+#!/bin/bash
+
+NAME="xeniro-snapscale-explorer-middleware"
+
+clean(){
+  docker ps -a | grep $NAME | awk '{print $1 }'|xargs docker stop
+  docker ps -a | grep $NAME | awk '{print $1 }'|xargs docker rm
+  docker images | grep $NAME | awk '{print $3 }'|xargs docker rmi
+}
+
+build(){
+  docker build -t $NAME .
+}
+
+run(){
+  docker run -itd \
+  -p 8089:8089 \
+  -p 8089:8089/udp \
+  -p 8090:8090 \
+  --name $NAME $NAME
+}
+
+bash(){
+  docker exec -itd $NAME /bin/bash
+}
+
+case "$1" in
+  clean)
+    clean
+    ;;
+  build)
+    build
+    ;;
+  run)
+    run
+    ;;
+  bash)
+    bash
+    ;;
+  *)
+    clean
+    build
+    run
+    ;;
+esac

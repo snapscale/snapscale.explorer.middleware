@@ -1,0 +1,4 @@
+#!/bin/bash
+
+GOPATH=/go
+go build -i -o /file/output/target snapscale-api
