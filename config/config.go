@@ -6,15 +6,19 @@ import (
 	"snapscale-api/libs/fileDir"
 )
 
-//const ApiBase = "http://192.168.1.201:30132/v1/"
-const ApiBase = "http://34.80.167.80:8888/v1/"
+//var ApiBase = "http://192.168.1.201:30132/v1/"
+//var ApiBase = "http://34.80.167.80:8888/v1/"
+var ApiBase = os.Getenv("ApiBase")
 
 //port
-const HttpPort = ":8090"
-const WsPort = ":8089"
+//const HttpPort = ":8090"
+//const WsPort = ":8089"
+var HttpPort = ":" + os.Getenv("HttpPort")
+var WsPort = ":" + os.Getenv("WsPort")
 
 //db
-const MongoConfig = "mongodb://xeniro:N0password@192.168.1.201:30017/?authSource=admin"
+//const MongoConfig = "mongodb://xeniro:N0password@192.168.1.201:30017/?authSource=admin"
+var MongoConfig = os.Getenv("MongoConfig")
 
 //var
 var FileDictionary = fileDir.ExecuteDirectory()

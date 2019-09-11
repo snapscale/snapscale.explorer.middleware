@@ -17,11 +17,17 @@ middleware of snapscale explorer
 ```
 
 ## Configuration
-- DB config  
-/config/config.go
-
-- Docker run config  
-./build
+```bash
+  docker run -itd \
+  -p 8089:8089 \
+  -p 8089:8089/udp \
+  -p 8090:8090 \
+  -e ApiBase='http://192.168.1.201:30132/v1/'
+  -e HttpPort='8090'
+  -e WsPort='8089'
+  -e MongoConfig='mongodb://xeniro:N0password@192.168.1.201:30017/?authSource=admin'
+  --name $NAME $NAME
+```
 
 ## Log (optional)
 Run script for log support
