@@ -22,10 +22,10 @@ middleware of snapscale explorer
   -p 8089:8089 \
   -p 8089:8089/udp \
   -p 8090:8090 \
-  -e ApiBase='http://192.168.1.201:30132/v1/'
-  -e HttpPort='8090'
-  -e WsPort='8089'
-  -e MongoConfig='mongodb://xeniro:N0password@192.168.1.201:30017/?authSource=admin'
+  -e SNAPSCALE_EXPLORER_MID_API_BASE='http://192.168.1.201:30132/v1/'
+  -e SNAPSCALE_EXPLORER_MID_HTTP_PORT='8090'
+  -e SNAPSCALE_EXPLORER_MID_WS_PORT='8089'
+  -e SNAPSCALE_EXPLORER_MID_MONGO_CONFIG='mongodb://xeniro:N0password@192.168.1.201:30017/?authSource=admin'
   --name $NAME $NAME
 ```
 
