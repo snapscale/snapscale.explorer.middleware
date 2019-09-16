@@ -8,6 +8,7 @@ import (
 
 var I *log.Logger
 var E *log.Logger
+var S *log.Logger
 
 var ErrorFile *os.File
 var InfoFile *os.File
@@ -33,4 +34,5 @@ func init() {
 
 	I = log.New(&InfoIo{}, "", log.LstdFlags)
 	E = log.New(&ErrorIo{}, "", log.LstdFlags|log.Llongfile)
+	S = log.New(os.Stdout, "", log.LstdFlags)
 }
