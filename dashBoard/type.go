@@ -18,10 +18,12 @@ type DataCenterS struct {
 		ProducerLoop       map[string]string             `json:"producer_loop"`
 	} `json:"producers"`
 	Performance struct {
-		Tps     int64 `json:"tps"`
-		Aps     int64 `json:"aps"`
-		TpsHigh int64 `json:"tps_high"`
-		ApsHigh int64 `json:"aps_high"`
+		Tps     int64   `json:"tps"`
+		Aps     int64   `json:"aps"`
+		TpsA    []int64 `json:"tps_a"`
+		ApsA    []int64 `json:"aps_a"`
+		TpsHigh int64   `json:"tps_high"`
+		ApsHigh int64   `json:"aps_high"`
 	} `json:"performance"`
 	XST struct {
 		VotedXST         int64 `json:"voted_xst"`
