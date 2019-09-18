@@ -6,15 +6,12 @@ steps:
     - '-c'
     - |
       docker pull asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest || exit 0
-
   - id: docker build
     name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:$COMMIT_SHA', '-t', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest', '--cache-from', ''asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest'','.']
-
   - id: docker push 
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:$COMMIT_SHA']
-  
   - id: docker push latest
     name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest']
