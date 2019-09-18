@@ -2,6 +2,8 @@ package _type
 
 type ActionsRequest struct {
 	AccountName string `json:"account_name"`
+	Pos         int32  `json:"pos,omitempty"`
+	Offset      int32  `json:"offset,omitempty"`
 }
 
 type Receipt struct {

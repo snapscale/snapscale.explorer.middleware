@@ -24,3 +24,24 @@ func GetActions(name string) (*_type.ActionsResponse, *_type.Error, error) {
 		return nil, e1, e2
 	}
 }
+
+func GetActions2(name string, pos int32, offset int32) (*_type.ActionsResponse, *_type.Error, error) {
+	var path = "get_actions"
+
+	reqT := &_type.ActionsRequest{}
+	reqT.AccountName = name
+	reqT.Pos = pos
+	reqT.Offset = offset
+
+	reqB, _ := json.Marshal(reqT)
+
+	data := &_type.ActionsResponse{}
+
+	e1, e2 := common.Do(reqB, base, path, data, false)
+
+	if e1 == nil && e2 == nil {
+		return data, e1, e2
+	} else {
+		return nil, e1, e2
+	}
+}

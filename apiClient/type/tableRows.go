@@ -1,10 +1,13 @@
 package _type
 
 type TableRowsRequest struct {
-	Code  string `json:"code"`
-	Table string `json:"table"`
-	Scope string `json:"scope"`
-	JSON  bool   `json:"json"`
+	Code       string `json:"code"`
+	Table      string `json:"table"`
+	Scope      string `json:"scope"`
+	JSON       bool   `json:"json"`
+	Limit      int32  `json:"limit,omitempty"`
+	LowerBound string `json:"lower_bound,omitempty"`
+	UpperBound string `json:"upper_bound,omitempty"`
 }
 
 type ProducerInfo struct {
