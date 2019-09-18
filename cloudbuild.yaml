@@ -1,4 +1,11 @@
 steps:
+  - name: 'gcr.io/cloud-builders/docker'
+   entrypoint: 'bash'
+   args:
+   - '-c'
+   - |
+     docker pull asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware::latest || exit 0
+     
   - id: docker build
     name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:$COMMIT_SHA', '-t', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest', '.']
