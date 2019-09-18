@@ -6,7 +6,8 @@ middleware of snapscale explorer
 - Add Index (mongodb)
     - transactions | createdAt
     ```
-    db.transactions.createIndex({"createdAt":1}{"background":true})
+    db.createCollection("daily");
+    db.transactions.createIndex({"createdAt":1},{"background":true});
     ```
 - Net
     Snapscale-explorer | Snapscale-explorer-middleware should under same network group or provide 8089/8090 ports for explorer.
@@ -26,11 +27,12 @@ middleware of snapscale explorer
   -e SNAPSCALE_EXPLORER_MID_HTTP_PORT='8090'
   -e SNAPSCALE_EXPLORER_MID_WS_PORT='8089'
   -e SNAPSCALE_EXPLORER_MID_MONGO_CONFIG='mongodb://xeniro:N0password@192.168.1.201:30017/?authSource=admin'
+  -e SNAPSCALE_EXPLORER_MID_LOG_PATH='/log'
   --name $NAME $NAME
 ```
 
 ## Log (optional)
 Run script for log support
 ```bash
-mkdir /file/output/log
+mkdir {logDir} [optional]
 ```

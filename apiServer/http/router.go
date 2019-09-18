@@ -9,6 +9,7 @@ import (
 	"snapscale-api/apiClient/history"
 	_type "snapscale-api/apiClient/type"
 	"snapscale-api/database/mongodb"
+	"snapscale-api/libs/log"
 	"strconv"
 )
 
@@ -19,6 +20,7 @@ type router struct {
 var Router *router
 
 func (x router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.S.Printf("Request [%s]: %s", r.Method, r.URL.Path)
 	rt, ok := x.M[r.URL.Path]
 	if ok {
 		w.Header().Set("Content-Type", "application/json;charset=UTF-8")
@@ -35,6 +37,11 @@ func init() {
 	Router.M["/api/block/"] = block
 	Router.M["/api/transaction/"] = transaction
 	Router.M["/api/charts/"] = charts
+	Router.M["/health/"] = health
+}
+
+func health(w http.ResponseWriter, r *http.Request) {
+	_ = r.Body.Close()
 }
 
 func account(w http.ResponseWriter, r *http.Request) {
