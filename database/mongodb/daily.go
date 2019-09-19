@@ -118,7 +118,7 @@ func dailyContract(tm time.Time) {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	length := len(t1.Rows)
-	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "contracts", "value": length, "`time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
+	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "contracts", "value": length, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
 }
 
 func DailyInfo() []byte {
@@ -215,6 +215,7 @@ func DailyInfo() []byte {
 	}
 
 	var result4 []int32
+
 	for cur4.Next(ctx) {
 		var x Normal
 		_ = cur4.Decode(&x)
