@@ -229,6 +229,20 @@ func DailyInfo() []byte {
 		RT4 []int32  `json:"dt4"`
 	}
 	var result = results{}
+
+	for i := len(result1); i < 10; i++ {
+		result1 = append(result1, "0")
+	}
+	for i := len(result2); i < 10; i++ {
+		result2 = append(result2, 0)
+	}
+	for i := len(result3); i < 10; i++ {
+		result3 = append(result3, 0)
+	}
+	for i := len(result4); i < 10; i++ {
+		result4 = append(result4, 0)
+	}
+
 	result.RT1 = result1
 	result.RT2 = result2
 	result.RT3 = result3
