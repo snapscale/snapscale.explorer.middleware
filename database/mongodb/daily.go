@@ -231,16 +231,16 @@ func DailyInfo() []byte {
 	var result = results{}
 
 	for i := len(result1); i < 10; i++ {
-		result1 = append(result1, "0")
+		result1 = append([]string{"0"}, result1...)
 	}
 	for i := len(result2); i < 10; i++ {
-		result2 = append(result2, 0)
+		result2 = append([]int64{0}, result2...)
 	}
 	for i := len(result3); i < 10; i++ {
-		result3 = append(result3, 0)
+		result3 = append([]int64{0}, result3...)
 	}
 	for i := len(result4); i < 10; i++ {
-		result4 = append(result4, 0)
+		result4 = append([]int32{0}, result4...)
 	}
 
 	result.RT1 = result1
