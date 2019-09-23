@@ -8,6 +8,7 @@ middleware of snapscale explorer
     ```
     db.createCollection("daily");
     db.transactions.createIndex({"createdAt":1},{"background":true});
+    db.daily.ensureIndex({xid:1})
     ```
 - Net
     Snapscale-explorer | Snapscale-explorer-middleware should under same network group or provide 8089/8090 ports for explorer.

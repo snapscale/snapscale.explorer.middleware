@@ -85,7 +85,7 @@ func dailyTransactionsAmount(tm time.Time) {
 	}
 
 	ctx1, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	_, _ = Daily.p.InsertOne(ctx1, bson.M{"type": "transactionAmount", "value": fmt.Sprintf("%.2f", sum), "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
+	_, _ = Daily.p.InsertOne(ctx1, bson.M{"type": "transactionAmount", "value": fmt.Sprintf("%.2f", sum), "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02"), "xid": tm.Format("2006-01-02") + "_transactionAmount"})
 }
 
 func dailyTransactions(tm time.Time) {
@@ -103,13 +103,13 @@ func dailyTransactions(tm time.Time) {
 			}},
 		},
 	}})
-	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "transactions", "value": transactions, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
+	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "transactions", "value": transactions, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02"), "xid": tm.Format("2006-01-02") + "_transactions"})
 }
 
 func dailyAccount(tm time.Time) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	accounts, _ := Accounts.p.EstimatedDocumentCount(ctx)
-	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "accounts", "value": accounts, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
+	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "accounts", "value": accounts, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02"), "xid": tm.Format("2006-01-02") + "_accounts"})
 }
 
 func dailyContract(tm time.Time) {
@@ -118,7 +118,7 @@ func dailyContract(tm time.Time) {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	length := len(t1.Rows)
-	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "contracts", "value": length, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02")})
+	_, _ = Daily.p.InsertOne(ctx, bson.M{"type": "contracts", "value": length, "time": tm.Unix(), "timeUTC": tm.Format("2006-01-02"), "xid": tm.Format("2006-01-02") + "_contracts"})
 }
 
 func DailyInfo() []byte {
