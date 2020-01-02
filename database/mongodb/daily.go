@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"snapscale-api/apiClient/chain"
 	_type "snapscale-api/apiClient/type"
@@ -18,6 +19,9 @@ var Daily *collection
 func dailyInit() {
 	Daily = &collection{}
 	Daily.p = MongoDb.Collection("daily")
+
+	createIndex()
+
 	go dailyOnce()
 }
 
@@ -251,4 +255,33 @@ func DailyInfo() []byte {
 	zz, _ := json.Marshal(result)
 
 	return zz
+}
+
+func createIndex() {
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	background := true
+
+	mod := mongo.IndexModel{
+		Keys: bson.M{
+			"createdAt": 1, // index in ascending order
+		},
+		Options: &options.IndexOptions{
+			Background: &background,
+		},
+	}
+	ind, err := Transactions.p.Indexes().CreateOne(ctx, mod)
+
+	fmt.Printf("createIndex index name %s, erro %v\n", ind, err)
+
+	mod1 := mongo.IndexModel{
+		Keys: bson.M{
+			"xid": 1, // index in ascending order
+		},
+		Options: &options.IndexOptions{
+			Background: &background,
+		},
+	}
+	ind, err = Daily.p.Indexes().CreateOne(ctx, mod1)
+
+	fmt.Printf("createIndex index name %s, erro %v\n", ind, err)
 }
