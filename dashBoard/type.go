@@ -38,7 +38,8 @@ type DataCenterS struct {
 		BlockNetLimit        int64 `json:"block_net_limit"`
 	} `json:"io"`
 	Count struct {
-		VotedTotal  int64 `json:"voted_total"`
-		StakedTotal int64 `json:"staked_total"`
+		VotedTotal   int64 `json:"voted_total"`
+		StakedTotal  int64 `json:"staked_total"`
+		Transactions int64 `json:"transactions"`
 	} `json:"count"`
 }

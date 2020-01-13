@@ -3,6 +3,7 @@ package dashBoard
 import (
 	"snapscale-api/apiClient/chain"
 	_type "snapscale-api/apiClient/type"
+	"snapscale-api/database/mongodb"
 	"strconv"
 	"strings"
 )
@@ -12,6 +13,7 @@ func longSync() {
 	syncProducers()
 	syncGlobal()
 	syncStakedTotal()
+	syncTransactions()
 }
 
 func syncCurrencyStats() {
@@ -59,4 +61,8 @@ func syncStakedTotal() {
 	if e1 == nil && e2 == nil && t != nil {
 		DataCenter.XST.StakedXST, _ = strconv.ParseInt(strings.Split(t.CoreLiquidBalance, ".")[0], 10, 64)
 	}
+}
+
+func syncTransactions() {
+	DataCenter.Count.Transactions = mongodb.Transactions.Count()
 }

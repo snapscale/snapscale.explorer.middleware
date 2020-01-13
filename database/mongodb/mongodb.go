@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"context"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
@@ -19,6 +20,11 @@ type collection struct {
 func (c collection) FindOne(filter interface{}, opts ...*options.FindOneOptions) *mongo.SingleResult {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	return c.p.FindOne(ctx, filter, opts...)
+}
+
+func (c collection) Count() int64 {
+	count, _ := c.p.CountDocuments(context.Background(), bson.D{})
+	return count
 }
 
 var Accounts *collection
