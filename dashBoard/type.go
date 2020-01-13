@@ -41,5 +41,7 @@ type DataCenterS struct {
 		VotedTotal   int64 `json:"voted_total"`
 		StakedTotal  int64 `json:"staked_total"`
 		Transactions int64 `json:"transactions"`
+		Users        int64 `json:"users"`
+		Contracts    int64 `json:"contracts"`
 	} `json:"count"`
 }

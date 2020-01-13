@@ -14,6 +14,8 @@ func longSync() {
 	syncGlobal()
 	syncStakedTotal()
 	syncTransactions()
+	syncUsers()
+	syncContracts()
 }
 
 func syncCurrencyStats() {
@@ -65,4 +67,16 @@ func syncStakedTotal() {
 
 func syncTransactions() {
 	DataCenter.Count.Transactions = mongodb.Transactions.Count()
+}
+
+func syncUsers() {
+	DataCenter.Count.Users = mongodb.Accounts.Count()
+}
+
+func syncContracts() {
+	t1 := &_type.XAbiHashResponse{}
+	_, _, _ = chain.GetTableRows("eosio", "abihash", "eosio", t1)
+
+	length := len(t1.Rows)
+	DataCenter.Count.Contracts = int64(length)
 }
