@@ -1,7 +1,7 @@
 steps:
   - id: docker build
     name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest', '.']
+    args: ['build', '--no-cache', '-t', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:${_IMAGE_TAG}', '.']
   - id: docker push latest
     name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:latest']
+    args: ['push', 'asia.gcr.io/$PROJECT_ID/snapscale-explorer-middleware:${_IMAGE_TAG}']
